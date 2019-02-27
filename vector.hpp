@@ -1,20 +1,20 @@
 template <typename T>
 myvector<T>::myvector()
 {
-    m_array = new T [1];
+    m_array = new T[1];
 }
 
 template <typename T>
 void myvector<T>::grow()
 {
-    T *temp = new T [size*2];
+    T *temp = new T[size*2];
 
     for(int i = 0; i < size; i++)
     {
         temp[i] = m_array[i];
     }
 
-    delete m_array;
+    delete [] m_array;
 
     m_array = temp;
 
@@ -75,7 +75,7 @@ myvector<T> myvector<T>::operator-()const
 template <typename T>
 myvector<T> myvector<T>::operator-(const myvector<T> &source)const
 {
-    T *temp =  new T [size];
+    T *temp = new T[size];
 
     if(size == source.size)
     {
@@ -94,7 +94,7 @@ myvector<T> myvector<T>::operator-(const myvector<T> &source)const
 template <typename T>
 myvector<T> myvector<T>::operator+(const myvector<T> &source)const
 {
-    T *temp = new T [size];
+    T *temp = new T[size];
 
     if(size == source.size)
     {
@@ -113,7 +113,7 @@ myvector<T> myvector<T>::operator+(const myvector<T> &source)const
 template <typename T>
 double myvector<T>::operator*(const myvector<T> &source)const
 {
-    T *temp = new T [size];
+    T *temp = new T[size];
     double total = 0;
 
     if(size == source.size)
@@ -154,7 +154,6 @@ T& myvector<T>::operator[](int index)
     }
     else
     {
-        std::cout << "5\n";
         throw "Index out of bounds";
     }
 }
@@ -192,22 +191,28 @@ void myvector<T>::incrementCurr()
 template <typename T>
 std::ostream& operator<<(std::ostream& os, const myvector<T> &obj)
 {
+    std::cout << obj.getSize();
     for(int i = 0; i < obj.getSize(); i++)
     {
         os << obj[i] << " ";
     }
-    return os;
+    return os;  
 }
 
 template <typename T>
 std::istream& operator>>(std::istream& in, myvector<T> &obj)
 {
-    if(obj.getCurr() == obj.getSize())
+    T input;
+
+    if(obj.getCurr()+1 >= obj.getSize())
     {
         obj.grow();
     }
+    in >> input; 
+    std::cout << input << std::endl;
+    
+    obj[obj.getCurr()] = input;
 
-    in >> obj[obj.getCurr()];
     obj.incrementCurr();
 
 

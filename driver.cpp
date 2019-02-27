@@ -21,14 +21,13 @@ int main(int argc,  char * argv[])
             {
                 throw "Too little amount of dataset\n";
             }
-            for(int i = 0; i < loop; i++)
+            for(int i = 0; i < 4; i++)
             {
-                for(int j = 0; j < loop; j++)
+                for(int j = 0; j < 4; j++)
                 {
-                    std::cout << "Hello\n";
                     fs >> temp;
-                    matrix.push_back(temp);
                 }
+                matrix.push_back(temp);
             }
         }
         else
@@ -40,12 +39,12 @@ int main(int argc,  char * argv[])
     {
         std::cerr << message << std::endl;
     }
-
-  
     
-    // std::cout << matrix[0] + matrix[1] << std::endl;
-    // std::cout << matrix[0] - matrix[1] << std::endl;
-    // std::cout << matrix[0] * matrix[1] << std::endl;
+    //std::cout << matrix[0].getSize() << std::endl;
+
+    //std::cout << matrix[0] + matrix[1] << std::endl;
+    //std::cout << matrix[0] - matrix[1] << std::endl;
+    //std::cout << matrix[0] * matrix[1] << std::endl;
     
     return 0;
 }
