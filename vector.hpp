@@ -1,49 +1,24 @@
 template <typename T>
 myvector<T>::myvector()
 {
-    m_array = new T[1];
+    m_array = new T[100];
+    m_size = 100;
+    m_curr = 0;
+
 }
 
 template <typename T>
-void myvector<T>::grow()
+myvector<T>::myvector(const int size)
 {
-    T *temp = new T[size*2];
-
-    for(int i = 0; i < size; i++)
-    {
-        temp[i] = m_array[i];
-    }
-
-    delete [] m_array;
-
-    m_array = temp;
-
-    size = size*2;
-}
-
-template <typename T>
-myvector<T>::myvector(const T* sourceArray)
-{
-    while(sizeof(sourceArray)/(sizeof(sourceArray[0])) > size)
-    {
-        grow();
-    }
-
-    for(int i = 0; i < sizeof(sourceArray)/(sizeof(sourceArray[0])); i++)
-    {
-        m_array[i] = sourceArray[i];
-    }
+    m_array = new T[size];
+    m_size = size;
+    m_curr = 0;
 }
 
 template <typename T>
 myvector<T>::myvector(const myvector &source)
 {
-    while(source.size > size)
-    {
-        grow();
-    }
-
-    for(int i = 0; i < source.size; i++)
+    for(int i = 0; i < source.m_size; i++)
     {
         m_array[i] = source.m_array[i];
     }
@@ -52,12 +27,8 @@ myvector<T>::myvector(const myvector &source)
 template <typename T>
 myvector<T>& myvector<T>::operator=(const myvector<T> &source)const
 {
-    while(source.size > size)
-    {
-        grow();
-    }
 
-    for(int i = 0; i < source.size; i++)
+    for(int i = 0; i < source.m_size; i++)
     {
         m_array[i] = source.m_array[i];
     }
@@ -66,7 +37,7 @@ myvector<T>& myvector<T>::operator=(const myvector<T> &source)const
 template <typename T>
 myvector<T> myvector<T>::operator-()const
 {
-    for(int i = 0; i < size;)
+    for(int i = 0; i < m_size; i++)
     {
         m_array[i] *= -1;
     }
@@ -75,11 +46,11 @@ myvector<T> myvector<T>::operator-()const
 template <typename T>
 myvector<T> myvector<T>::operator-(const myvector<T> &source)const
 {
-    T *temp = new T[size];
+    T *temp = new T[m_size];
 
-    if(size == source.size)
+    if(m_size == source.m_size)
     {
-        for(int i = 0; i < size; i++)
+        for(int i = 0; i < m_size; i++)
         temp[i] = m_array[i] - source[i];
         
     }
@@ -94,11 +65,11 @@ myvector<T> myvector<T>::operator-(const myvector<T> &source)const
 template <typename T>
 myvector<T> myvector<T>::operator+(const myvector<T> &source)const
 {
-    T *temp = new T[size];
+    T *temp = new T[m_size];
 
-    if(size == source.size)
+    if(m_size == source.m_size)
     {
-        for(int i = 0; i < size; i++)
+        for(int i = 0; i < m_size; i++)
         temp[i] = m_array[i] + source[i];
         
     }
@@ -113,12 +84,12 @@ myvector<T> myvector<T>::operator+(const myvector<T> &source)const
 template <typename T>
 double myvector<T>::operator*(const myvector<T> &source)const
 {
-    T *temp = new T[size];
+    T *temp = new T[m_size];
     double total = 0;
 
-    if(size == source.size)
+    if(m_size == source.m_size)
     {
-        for(int i = 0; i < size; i++)
+        for(int i = 0; i < m_size; i++)
         total += (m_array[i] * source[i]);
         
     }
@@ -134,7 +105,7 @@ double myvector<T>::operator*(const myvector<T> &source)const
 template <typename T>
 T myvector<T>::operator[](int index)const
 {
-    if(size >= index)
+    if(m_size >= index)
     {
         return m_array[index];
     }
@@ -148,7 +119,7 @@ T myvector<T>::operator[](int index)const
 template <typename T>
 T& myvector<T>::operator[](int index)
 {
-    if(size >= index)
+    if(m_size>= index)
     {
         return m_array[index];
     }
@@ -161,31 +132,26 @@ T& myvector<T>::operator[](int index)
 template <typename T>
 void myvector<T>::pushback(const T &value)
 {
-    if(curr == size)
-    {
-        grow();
-    }
-
-    m_array[curr] = value;
-    curr++;
+    m_array[m_curr] = value;
+    m_curr++;
 }
 
 template <typename T>
 int myvector<T>::getSize()const
 {
-    return size;
+    return m_size;
 }
 
 template <typename T>
 int myvector<T>::getCurr()const
 {
-    return curr;
+    return m_curr;
 }
 
 template <typename T>
 void myvector<T>::incrementCurr()
 {
-    curr++;
+    m_curr++;
 }
 
 template <typename T>
@@ -204,10 +170,6 @@ std::istream& operator>>(std::istream& in, myvector<T> &obj)
 {
     T input;
 
-    if(obj.getCurr()+1 >= obj.getSize())
-    {
-        obj.grow();
-    }
     in >> input; 
     std::cout << input << std::endl;
     

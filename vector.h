@@ -19,15 +19,15 @@ class myvector
 {
     private:
         T *m_array;
-        int size = 1;
-        int curr = 0;
+        int m_size;
+        int m_curr;
         
         
     
     public:
         myvector();
         ~myvector(){}
-        myvector(const T* sourceArray);
+        myvector(const int size);
         myvector(const myvector &source);
 
         myvector<T>& operator=(const myvector<T> &source)const;
@@ -39,7 +39,6 @@ class myvector
         T operator[](int index)const;
         T& operator[](int index);
         double operator*(const myvector<T> &source)const;
-        void grow();
         void pushback(const T &value);
         void incrementCurr();
         int getCurr()const;
