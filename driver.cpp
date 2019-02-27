@@ -4,47 +4,33 @@
 
 int main(int argc,  char * argv[])
 {
-    std::vector<myvector<double>> matrix;
-    myvector<double> temp;
-    int loop;
-    try
-    {
-        if(argc > 1)
-        {
-            std::ifstream fs(argv[1]);
-            if (!(fs.is_open() && fs.good()))
-            {
-                throw "File not read correctly\n";
-            }
-            fs >> loop;
-            if(loop < 2)
-            {
-                throw "Too little amount of dataset\n";
-            }
-            for(int i = 0; i < 4; i++)
-            {
-                for(int j = 0; j < 4; j++)
-                {
-                    fs >> temp;
-                }
-                matrix.push_back(temp);
-            }
-        }
-        else
-        {
-            throw "No arguments.\n";
-        }    
-    }
-    catch (std::string message)
-    {
-        std::cerr << message << std::endl;
-    }
-    
-    //std::cout << matrix[0].getSize() << std::endl;
+    myvector<double> p(5);
+    double i = 7;
 
-    //std::cout << matrix[0] + matrix[1] << std::endl;
-    //std::cout << matrix[0] - matrix[1] << std::endl;
-    //std::cout << matrix[0] * matrix[1] << std::endl;
+    p[0] = 1;
+    p[1] = 2;
+    p[2] = 3;
+    p[3] = 4;
+    p[4] = 5;
+
+    std::cout << p << std::endl;
+
+    myvector<double> q(5);
+
+    q = p;
+
+    p[1] = 55;
+
+    p = -p;
+
+    std::cout << p << std::endl;
+
+    std::cout << q << std::endl;
+
+
+
+
+    //std::cout << p;
     
     return 0;
 }

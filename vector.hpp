@@ -1,13 +1,4 @@
 template <typename T>
-myvector<T>::myvector()
-{
-    m_array = new T[100];
-    m_size = 100;
-    m_curr = 0;
-
-}
-
-template <typename T>
 myvector<T>::myvector(const int size)
 {
     m_array = new T[size];
@@ -18,15 +9,23 @@ myvector<T>::myvector(const int size)
 template <typename T>
 myvector<T>::myvector(const myvector &source)
 {
+    m_array = new T[source.m_size];
+
     for(int i = 0; i < source.m_size; i++)
     {
         m_array[i] = source.m_array[i];
     }
+    m_size = source.m_size;
+    m_curr = source.m_curr;
 
 }
+
 template <typename T>
-myvector<T>& myvector<T>::operator=(const myvector<T> &source)const
+myvector<T>& myvector<T>::operator=(const myvector<T> &source)
 {
+    delete m_array;
+
+    m_array = new T[source.m_size];
 
     for(int i = 0; i < source.m_size; i++)
     {
@@ -37,10 +36,15 @@ myvector<T>& myvector<T>::operator=(const myvector<T> &source)const
 template <typename T>
 myvector<T> myvector<T>::operator-()const
 {
+
+    myvector<T> temp(m_size);
+
     for(int i = 0; i < m_size; i++)
     {
-        m_array[i] *= -1;
+        temp[i] = m_array[i] *-1;
     }
+
+    return temp;
 }
 
 template <typename T>
@@ -130,22 +134,21 @@ T& myvector<T>::operator[](int index)
 }
 
 template <typename T>
-void myvector<T>::pushback(const T &value)
+int myvector<T>::getCurr()const
 {
-    m_array[m_curr] = value;
-    m_curr++;
+    return m_curr;
+}
+
+template <typename T>
+void myvector<T>::resetCurr()
+{
+    m_curr = 0;
 }
 
 template <typename T>
 int myvector<T>::getSize()const
 {
     return m_size;
-}
-
-template <typename T>
-int myvector<T>::getCurr()const
-{
-    return m_curr;
 }
 
 template <typename T>
@@ -157,7 +160,6 @@ void myvector<T>::incrementCurr()
 template <typename T>
 std::ostream& operator<<(std::ostream& os, const myvector<T> &obj)
 {
-    std::cout << obj.getSize();
     for(int i = 0; i < obj.getSize(); i++)
     {
         os << obj[i] << " ";
@@ -165,18 +167,15 @@ std::ostream& operator<<(std::ostream& os, const myvector<T> &obj)
     return os;  
 }
 
-template <typename T>
-std::istream& operator>>(std::istream& in, myvector<T> &obj)
-{
-    T input;
-
-    in >> input; 
-    std::cout << input << std::endl;
-    
-    obj[obj.getCurr()] = input;
-
-    obj.incrementCurr();
-
-
-    return in;
-}
+// template <typename T>
+// std::istream& operator>>(std::istream& in, const myvector<T> &obj)
+// {
+    // T input;
+// 
+    // in >> input; 
+    // std::cout << input << std::endl;
+// 
+    // (obj[obj.getCurr()] = input;
+// 
+    // return in;
+// }

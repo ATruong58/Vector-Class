@@ -25,13 +25,12 @@ class myvector
         
     
     public:
-        myvector();
+        myvector(){}
         ~myvector(){}
         myvector(const int size);
         myvector(const myvector &source);
 
-        myvector<T>& operator=(const myvector<T> &source)const;
-
+        myvector<T>& operator=(const myvector<T> &source);  
         myvector<T> operator-()const;
         myvector<T> operator-(const myvector<T> &source)const;
         myvector<T> operator+(const myvector<T> &source)const;
@@ -41,6 +40,7 @@ class myvector
         double operator*(const myvector<T> &source)const;
         void pushback(const T &value);
         void incrementCurr();
+        void resetCurr();
         int getCurr()const;
         int getSize()const;
 
@@ -52,7 +52,7 @@ template <typename U>
         std::ostream& operator<<(std::ostream& os, const myvector<U> &obj);
         
         template <typename U>
-        std::istream& operator>>(std::istream& in, myvector<U> &obj);
+        std::istream& operator>>(std::istream& in, const myvector<U> &obj);
 
 #include "vector.hpp"
 
