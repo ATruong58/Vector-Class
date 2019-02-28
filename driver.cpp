@@ -4,33 +4,47 @@
 
 int main(int argc,  char * argv[])
 {
-    myvector<double> p(5);
-    double i = 7;
+    std::vector<myvector<double>> matrix;
+    int loop;
+    double tolerance = 0.001;
+    try
+    {
+        if(argc > 1)
+        {
+            std::ifstream fs(argv[1]);
+            if (!(fs.is_open() && fs.good()))
+            {
+                throw std::out_of_range( "File not read correctly\n");
+            }
+            fs >> loop;
+            myvector<double> temp(loop); 
+            if(loop < 2)
+            {
+                throw std::out_of_range( "Too little amount of dataset\n");
+            }
 
-    p[0] = 1;
-    p[1] = 2;
-    p[2] = 3;
-    p[3] = 4;
-    p[4] = 5;
+            for(int i = 0; i < loop; i++)
+            {
+                fs >> temp;
+                matrix.push_back(temp);
+            }
+            
+            std::cout << matrix[0] + matrix[1] << std::endl;
+            std::cout << matrix[0] - matrix[1] << std::endl;
+            std::cout << matrix[0] * matrix[1] << std::endl;
+            std::cout << matrix[1][0]  << std::endl;
+            
 
-    std::cout << p << std::endl;
+        }
+        else
+        {
+            throw std::out_of_range( "No arguments.\n");
+        }
+    }
+    catch (std::string message)
+    {
+        std::cerr << message << std::endl;
+    }
 
-    myvector<double> q(5);
-
-    q = p;
-
-    p[1] = 55;
-
-    p = -p;
-
-    std::cout << p << std::endl;
-
-    std::cout << q << std::endl;
-
-
-
-
-    //std::cout << p;
-    
     return 0;
 }

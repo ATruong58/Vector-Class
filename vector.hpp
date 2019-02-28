@@ -1,14 +1,25 @@
+//Defualt Constructor
+template <typename T>
+myvector<T>::myvector()
+{
+    m_array = new T[0];
+    m_size = 0;
+}
+
+//Paramatized Constructor
 template <typename T>
 myvector<T>::myvector(const int size)
 {
     m_array = new T[size];
     m_size = size;
-    m_curr = 0;
 }
 
+//Copy Constructir
 template <typename T>
 myvector<T>::myvector(const myvector &source)
 {
+    delete m_array;
+
     m_array = new T[source.m_size];
 
     for(int i = 0; i < source.m_size; i++)
@@ -16,10 +27,10 @@ myvector<T>::myvector(const myvector &source)
         m_array[i] = source.m_array[i];
     }
     m_size = source.m_size;
-    m_curr = source.m_curr;
 
 }
 
+//Operator = 
 template <typename T>
 myvector<T>& myvector<T>::operator=(const myvector<T> &source)
 {
@@ -31,8 +42,11 @@ myvector<T>& myvector<T>::operator=(const myvector<T> &source)
     {
         m_array[i] = source.m_array[i];
     }
+    
+    m_size = source.m_size;
 }
 
+//Unary -
 template <typename T>
 myvector<T> myvector<T>::operator-()const
 {
@@ -47,48 +61,52 @@ myvector<T> myvector<T>::operator-()const
     return temp;
 }
 
+//Subtraction of two myvector
 template <typename T>
 myvector<T> myvector<T>::operator-(const myvector<T> &source)const
 {
-    T *temp = new T[m_size];
-
+    myvector<T> temp(m_size);
+    
     if(m_size == source.m_size)
     {
         for(int i = 0; i < m_size; i++)
-        temp[i] = m_array[i] - source[i];
-        
+        {
+            temp[i] = m_array[i] - source[i];
+        }   
     }
     else
     {
-        throw "Size not equal";
+        throw std::out_of_range( "Size not equal");
     }
 
-    return myvector<T>(temp);
+    return temp;
 }
 
+//Addition of two myvector
 template <typename T>
 myvector<T> myvector<T>::operator+(const myvector<T> &source)const
 {
-    T *temp = new T[m_size];
-
+    myvector<T> temp(m_size);
+    
     if(m_size == source.m_size)
     {
         for(int i = 0; i < m_size; i++)
-        temp[i] = m_array[i] + source[i];
-        
+        {
+            temp[i] = m_array[i] + source[i];
+        }
     }
     else
     {
-        throw "Size not equal";
+        throw std::out_of_range( "Size not equal");
     }
 
-    return myvector<T>(temp);
+    return temp;
 }
 
+//Dot Product
 template <typename T>
 double myvector<T>::operator*(const myvector<T> &source)const
 {
-    T *temp = new T[m_size];
     double total = 0;
 
     if(m_size == source.m_size)
@@ -99,13 +117,14 @@ double myvector<T>::operator*(const myvector<T> &source)const
     }
     else
     {
-        throw "Size not equal";
+        throw std::out_of_range( "Size not equal");
     }
 
     return total;
 
 }
 
+//Read elements of the vector
 template <typename T>
 T myvector<T>::operator[](int index)const
 {
@@ -115,11 +134,12 @@ T myvector<T>::operator[](int index)const
     }
     else
     {
-        throw "Index out of bounds";
+        throw std::out_of_range( "Index out of bounds");
     }
 
 }
 
+//Read elements of the vector
 template <typename T>
 T& myvector<T>::operator[](int index)
 {
@@ -129,34 +149,18 @@ T& myvector<T>::operator[](int index)
     }
     else
     {
-        throw "Index out of bounds";
+        throw std::out_of_range( "Index out of bounds");
     }
 }
 
-template <typename T>
-int myvector<T>::getCurr()const
-{
-    return m_curr;
-}
-
-template <typename T>
-void myvector<T>::resetCurr()
-{
-    m_curr = 0;
-}
-
+//Size getter
 template <typename T>
 int myvector<T>::getSize()const
 {
     return m_size;
 }
 
-template <typename T>
-void myvector<T>::incrementCurr()
-{
-    m_curr++;
-}
-
+//Output
 template <typename T>
 std::ostream& operator<<(std::ostream& os, const myvector<T> &obj)
 {
@@ -167,15 +171,29 @@ std::ostream& operator<<(std::ostream& os, const myvector<T> &obj)
     return os;  
 }
 
-// template <typename T>
-// std::istream& operator>>(std::istream& in, const myvector<T> &obj)
-// {
-    // T input;
-// 
-    // in >> input; 
-    // std::cout << input << std::endl;
-// 
-    // (obj[obj.getCurr()] = input;
-// 
-    // return in;
-// }
+//Input
+template <typename T>
+std::istream& operator>>(std::istream& in, myvector<T> &obj)
+{
+    for(int i = 0; i < obj.getSize(); i++)
+    {
+        in >> obj[i];
+    }
+
+    return in;
+}
+
+//guass_Sidel
+template <typename T>
+void guass_Sidel(const std::vector<T>& matrix)
+{
+    int loop = matrix.size();
+    int interation = 3;
+    while(iteration > 0)
+    {
+        for(int i = 0; i < loop; i++)
+        {
+
+        }
+    }
+}
