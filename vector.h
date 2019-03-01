@@ -12,6 +12,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include<cmath>
 
 
 /*! myvector class
@@ -44,6 +45,7 @@ class myvector
         /*! Paramatized Constructor
          *
          * \post Creates a new vector with passed in number of element
+         *       with value all equal to 0
          */
         myvector(const int size);
 
@@ -63,6 +65,8 @@ class myvector
 
         /*! Unary - 
          *
+         * \pre *= Must be defined for the calling obj
+         * 
          * \return a vector with lhs value multiple by -1  
          */
         myvector<T> operator-()const;
@@ -72,8 +76,9 @@ class myvector
          * \param rhs myvector class to subtract lhs myvector class value to
          * \return A myvector class with the difference of the two 
          *
-         * \pre rhs myvector class and lhs myvector class must have the same size
+         * \pre Rhs myvector class and lhs myvector class must have the same size
          *      and value assign to all index in the array 
+         *      Must have -(subtraction) define
          * \throws std::invalid_argument is thrown if size is not the same
          * 
          */
@@ -84,12 +89,24 @@ class myvector
          * \param rhs myvector class to add with lhs myvector class value to
          * \return A myvector class with the sum of the two 
          *
-         * \pre rhs myvector class and lhs myvector class must have the same size
+         * \pre Rhs myvector class and lhs myvector class must have the same size
          *      and value assign to all index in the array 
+         *      Must have +(addition) define
          * \throws std::invalid_argument is thrown if size is not the same
          * 
          */
         myvector<T> operator+(const myvector<T> &source)const;
+
+        /*! Binary *
+         *
+         * \param rhs number to multiply with all valye in lhs myvector class value
+         * \return A myvector class with the all value multiply with rhs
+         *
+         * \pre Lhs myvector class must have a reference [] operator define
+         *      Must have *(multiplication) defined
+         * 
+         */
+        myvector<T> operator*(const T rhs)const;
 
         /*! Reads an element of the vector.
          *
@@ -115,8 +132,9 @@ class myvector
          * \param rhs myvector to dot product with lhs.
          * \return a double with the value of the dot product
          *
-         * \pre rhs myvector class and lhs myvector class must have the same size
+         * \pre Rhs myvector class and lhs myvector class must have the same size
          *      and value assign to all index in the array 
+         *      Must have += define
          * \throws std::invalid_argument is thrown if size is not the same
          */
         double operator*(const myvector<T> &source)const;
@@ -153,9 +171,18 @@ class myvector
 
          /*! Guass_sidel method
          *
-         * \pre Stream outpit operator is defined.
-         * \post The contents of the vector are read into the given variable
-         * \return the modified input stream.
+         * \param a vector class of myvector class
+         * \pre Stream output operator is defined.
+         *      Abs() must be define
+         *      -Subtraction must be define
+         *      +Addition Must be define
+         *      *Multiplication Must be define
+         *      vector passed in must be of type myvector
+         *      myvector class must be defined
+         * \post output of linear depenence will be prinited. 1 if linear dependent
+         *       0 if linear independent. If linear depended will out put the x that leades
+         *       for the matrix to be linear dependent
+         * 
          *
          */
         template <typename U>

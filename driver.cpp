@@ -33,12 +33,13 @@ int main(int argc,  char * argv[])
             std::cout << matrix[0] - matrix[1] << std::endl;
             std::cout << matrix[0] * matrix[1] << std::endl;
             std::cout << matrix[1][0]  << std::endl;
+            guass_Sidel(matrix);
             
 
         }
         else
         {
-            throw std::out_of_range( "No arguments.\n");
+            throw std::out_of_range( "No dataset is passed.\n");
         }
     }
     catch (std::string message)
