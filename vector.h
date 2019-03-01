@@ -67,7 +67,7 @@ class myvector
 
         /*! Binary - 
          *
-         * \param rhs myvector class to subtract lhs myvector class value to
+         * \param source  myvector class to subtract lhs myvector class value to
          * \return A myvector class with the difference of the two 
          *
          * \pre Rhs myvector class and lhs myvector class must have the same size
@@ -80,7 +80,7 @@ class myvector
 
         /*! Binary + 
          *
-         * \param rhs myvector class to add with lhs myvector class value to
+         * \param &source myvector class to add with lhs myvector class value to
          * \return A myvector class with the sum of the two 
          *
          * \pre Rhs myvector class and lhs myvector class must have the same size
@@ -104,7 +104,7 @@ class myvector
 
         /*! Reads an element of the vector.
          *
-         * \param idx the index of the element to read.
+         * \param index the index of the element to read.
          * \return The element at position idx is returned.
          *
          * \pre idx is within the range [0, length()).
@@ -114,7 +114,7 @@ class myvector
 
         /*! Return the element of the vector.
          *
-         * \param idx the index of the element to read.
+         * \param index the index of the element to read.
          * \return The element at position idx is returned with reference so it is changable
          *
          * \pre idx is within the range [0, length()).
@@ -123,7 +123,7 @@ class myvector
         T& operator[](int index);
 
         /*! Dot product 
-         * \param rhs myvector to dot product with lhs.
+         * \param source myvector to dot product with lhs.
          * \return a double with the value of the dot product
          *
          * \pre Rhs myvector class and lhs myvector class must have the same size
@@ -146,10 +146,9 @@ class myvector
          * \return m_size
          */
         int getSize()const;
-
-        
-    
 };
+
+
         /*! Stream insertion operator for myvector class.
          *
          * \pre Stream insertion operator is defined.
@@ -173,7 +172,7 @@ class myvector
 
          /*! Guass_sidel method
          *
-         * \param a vector class of myvector class
+         * \param matrix a vector class of myvector
          * \pre Stream output operator is defined.
          *      Abs() must be define
          *      -Subtraction must be define
