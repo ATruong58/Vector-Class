@@ -2,7 +2,7 @@
 template <typename T>
 myvector<T>::myvector()
 {
-    m_array = new T[0];
+    m_array = std::unique_ptr<T[]>(new T[0]);
     m_size = 0;
 }
 
@@ -10,7 +10,7 @@ myvector<T>::myvector()
 template <typename T>
 myvector<T>::myvector(const int size)
 {
-    m_array = new T[size];
+    m_array = std::unique_ptr<T[]>(new T[size]);
     m_size = size;
 
     for(int i = 0; i < size; i++)
@@ -23,9 +23,7 @@ myvector<T>::myvector(const int size)
 template <typename T>
 myvector<T>::myvector(const myvector &source)
 {
-    delete m_array;
-
-    m_array = new T[source.m_size];
+    m_array = std::unique_ptr<T[]>(new T[source.m_size]);
 
     for(int i = 0; i < source.m_size; i++)
     {
@@ -37,11 +35,9 @@ myvector<T>::myvector(const myvector &source)
 
 //Operator = 
 template <typename T>
-myvector<T>& myvector<T>::operator=(const myvector<T> &source)
+void  myvector<T>::operator=(const myvector<T> &source)
 {
-    delete m_array;
-
-    m_array = new T[source.m_size];
+    m_array = std::unique_ptr<T[]>(new T[source.m_size]);
 
     for(int i = 0; i < source.m_size; i++)
     {
@@ -208,16 +204,31 @@ template <typename T>
 void guass_Sidel(const std::vector<T>& matrix)
 {
     std::vector<myvector<double>> diffVector;
+    std::vector<myvector<double>> a; 
     myvector<double> totalVector = matrix[matrix.size()-1];
+    myvector<double> copied(matrix[0].getSize());
     int loop = matrix.size()-1;
+    std::unique_ptr<double[]> x (new double[loop]);
     bool empty = true;
     double y;
-    double temp;
     double count = 0;
-    double a[loop][loop+1];
-    double x[loop] = { 0 };
     double accuracy = .001;
+
+    //Make intital value = 0
+    for(int i = 0; i < loop; i++)
+    {
+	x[i] = 0;
+    }
     
+    for(int i = 0; i < loop; i++)
+    { 
+
+	a.push_back(copied);
+
+    }
+
+
+
     //Put in matrix into correct column by transposing them
     for(int i = 0; i < loop; i++)
     {
@@ -263,7 +274,7 @@ void guass_Sidel(const std::vector<T>& matrix)
 
     //Subtract the augmented vector with the product of the corresponding
     //a1v1 * a2v2 ..... *anvn
-    for(int i = 0; i < matrix.size()-1; i++)
+    for(int i = 0; i < loop; i++)
     {
         totalVector = totalVector - (matrix[i] * x[i]);   
     }
@@ -297,10 +308,5 @@ void guass_Sidel(const std::vector<T>& matrix)
     }
 
     std::cout << accuracy << std::endl;
-    
-
-
-    
-
     
 }

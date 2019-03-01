@@ -6,7 +6,6 @@ int main(int argc,  char * argv[])
 {
     std::vector<myvector<double>> matrix;
     int loop;
-    double tolerance = 0.001;
     try
     {
         if(argc > 1)
@@ -25,9 +24,11 @@ int main(int argc,  char * argv[])
 
             for(int i = 0; i < loop; i++)
             {
-                fs >> temp;
+		fs >> temp;
                 matrix.push_back(temp);
-            }
+	    }
+
+
             
             std::cout << matrix[0] + matrix[1] << std::endl;
             std::cout << matrix[0] - matrix[1] << std::endl;

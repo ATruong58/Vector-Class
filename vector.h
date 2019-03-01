@@ -9,6 +9,7 @@
 #ifndef VECTOR_H
 #define VECTOR_H
 
+#include <memory>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -24,7 +25,7 @@ template <class T>
 class myvector
 {
     private:
-        T *m_array;
+	std::unique_ptr<T[]> m_array;
         int m_size;
         
         
@@ -55,13 +56,6 @@ class myvector
          *       and underlying storage size equal to that of source's storage.
          */
         myvector(const myvector &source);
-
-        /*! Operator = 
-         *
-         * \post Set lhs vector with copies of elements from rhs
-         *       and underlying storage size equal to that of rhs's storage.
-         */
-        myvector<T>& operator=(const myvector<T> &source);  
 
         /*! Unary - 
          *
@@ -138,6 +132,14 @@ class myvector
          * \throws std::invalid_argument is thrown if size is not the same
          */
         double operator*(const myvector<T> &source)const;
+
+	/*! Operator =
+         *
+         * \post Set lhs vector with copies of elements from rhs
+         *       and underlying storage size equal to that of rhs's storage.
+         */
+        void  operator=(const myvector<T> &source);
+
 
         /*! Getter for m_size
          *
